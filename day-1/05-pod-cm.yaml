@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pkad-config
+data:
+  app-runtime: python
+  company: "home.pl"
+  msg: "home.pl super"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad
+  labels:
+    name: pkad
+spec:
+  containers:
+  - name: myapp
+    image: gcr.io/kuar-demo/kuard-amd64:1
+    envFrom:
+      - configMapRef:
+          name: pkad-config
