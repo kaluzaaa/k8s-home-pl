@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloapp
+  template:
+    metadata:
+      labels:
+        app: helloapp
+    spec:
+      containers:
+      - name: srv
+        image: poznajkubernetes/helloapp:svc
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloapp
+spec:
+  selector:
+    app: helloapp
+  type: NodePort
+  ports:
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 8080
+    nodePort: 30080
+  - protocol: TCP
+    name: https
+    port: 443
+    targetPort: 8081
+    nodePort: 30443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+spec:
+  selector:
+    app: demo
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
