@@ -1,0 +1,22 @@
+name: Deploy an app to kind
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+
+jobs:
+  deploy:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    runs-on: self-hosted
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
+
+      # Test kind
+      - name: test kind
+        run: kubectl get nodes
