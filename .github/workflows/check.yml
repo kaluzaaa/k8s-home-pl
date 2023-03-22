@@ -24,15 +24,15 @@ jobs:
         
       - name: Wait for app
         run: |
-          kubectl rollout status -n online-boutique-prod adservice
-          kubectl rollout status -n online-boutique-prod cartservice
-          kubectl rollout status -n online-boutique-prod checkoutservice
-          kubectl rollout status -n online-boutique-prod currencyservice
-          kubectl rollout status -n online-boutique-prod emailservice
-          kubectl rollout status -n online-boutique-prod frontend
-          kubectl rollout status -n online-boutique-prod loadgenerator
-          kubectl rollout status -n online-boutique-prod paymentservice
-          kubectl rollout status -n online-boutique-prod productcatalogservice
-          kubectl rollout status -n online-boutique-prod recommendationservice
-          kubectl rollout status -n online-boutique-prod redis
-          kubectl rollout status -n online-boutique-prod shippingservice
+          kubectl rollout status -n online-boutique-prod deployment adservice
+          kubectl rollout status -n online-boutique-prod deployment cartservice
+          kubectl rollout status -n online-boutique-prod deployment checkoutservice
+          kubectl rollout status -n online-boutique-prod deployment currencyservice
+          kubectl rollout status -n online-boutique-prod deployment emailservice
+          kubectl rollout status -n online-boutique-prod deployment frontend
+          kubectl rollout status -n online-boutique-prod deployment loadgenerator
+          kubectl rollout status -n online-boutique-prod deployment paymentservice
+          kubectl rollout status -n online-boutique-prod deployment productcatalogservice
+          kubectl rollout status -n online-boutique-prod deployment recommendationservice
+          kubectl rollout status -n online-boutique-prod deployment redis
+          kubectl rollout status -n online-boutique-prod deployment shippingservice
