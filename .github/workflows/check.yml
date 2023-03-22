@@ -18,6 +18,9 @@ jobs:
 
       - name: Create namespaces
         run: kubectl create ns online-boutique-prod -o yaml --dry-run=client | kubectl apply -f -
+      
+      - name: Create screat
+        run: kubectl create secret generic prod-db-secret --from-literal=username=${{ secrets.USER_DB }} --from-literal=password=${{ secrets.DB_PASS }} -o yaml --dry-run=client | kubectl apply -f -
     
       - name: Deploy app
         run: kubectl apply -n online-boutique-prod -f app/online-boutique/
