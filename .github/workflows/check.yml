@@ -5,7 +5,6 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
-
 jobs:
   deploy:
     permissions:
@@ -17,6 +16,23 @@ jobs:
       # Checks out the repository this file is in
       - uses: actions/checkout@v3
 
-      # Test kind
-      - name: test kind
-        run: kubectl get nodes
+      - name: Create namespaces
+        run: kubectl create ns online-boutique-prod -o yaml --dry-run=client | kubectl apply -f -
+    
+      - name: Deploy app
+        run: kubectl apply -n online-boutique-prod -f k8s-home-pl/app/online-boutique/
+        
+      - name: Wait for app
+        run: |
+          kubectl rollout status -n online-boutique-prod adservice
+          kubectl rollout status -n online-boutique-prod cartservice
+          kubectl rollout status -n online-boutique-prod checkoutservice
+          kubectl rollout status -n online-boutique-prod currencyservice
+          kubectl rollout status -n online-boutique-prod emailservice
+          kubectl rollout status -n online-boutique-prod frontend
+          kubectl rollout status -n online-boutique-prod loadgenerator
+          kubectl rollout status -n online-boutique-prod paymentservice
+          kubectl rollout status -n online-boutique-prod productcatalogservice
+          kubectl rollout status -n online-boutique-prod recommendationservice
+          kubectl rollout status -n online-boutique-prod redis
+          kubectl rollout status -n online-boutique-prod shippingservice
