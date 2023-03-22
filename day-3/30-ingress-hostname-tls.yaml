@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloapp-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloapp-v1
+  template:
+    metadata:
+      labels:
+        app: helloapp-v1
+    spec:
+      containers:
+      - name: srv
+        image: poznajkubernetes/helloapp:svc
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloapp-v1
+spec:
+  selector:
+    app: helloapp-v1
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+---
+# openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
+# kubectl create secret tls ssl-cert --cert=certificate.pem --key=key.pem  -o yaml --dry-run=client | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: helloapp-v1
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - helloapp.home.pl
+    secretName: ssl-cert
+  rules:
+  - host: helloapp.home.pl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: helloapp-v1
+            port:
+              number: 8080

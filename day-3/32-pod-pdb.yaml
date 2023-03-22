@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aci
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aci
+  template:
+    metadata:
+      labels:
+        app: aci
+    spec:
+      containers:
+      - name: aci
+        image: poznajkubernetes/helloapp:svc
+        resources: {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - "aci" 
+              weight: 100
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: aci-pdb
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: aci

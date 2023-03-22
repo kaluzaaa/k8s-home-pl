@@ -1,0 +1,19 @@
+# openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
+# kubectl create secret tls ssl-cert --cert=certificate.pem --key=key.pem  -o yaml --dry-run=client | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad
+  labels:
+    name: pkad
+spec:
+  containers:
+  - name: myapp
+    image: gcr.io/kuar-demo/kuard-amd64:1
+    volumeMounts:
+      - mountPath: /etc/ssl/certs
+        name: tls
+  volumes:
+    - name: tls
+      secret:
+        secretName: ssl-cert

@@ -1,0 +1,20 @@
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+req_extensions = req_ext
+distinguished_name = dn
+
+[dn]
+C = PL
+ST = mazowieckie
+L = Warszawa
+O = kaluzaaa
+OU = kaluzaaa
+CN = helloapp.home.pl
+
+[req_ext]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = helloapp.home.pl
