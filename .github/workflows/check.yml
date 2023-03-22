@@ -20,7 +20,7 @@ jobs:
         run: kubectl create ns online-boutique-prod -o yaml --dry-run=client | kubectl apply -f -
     
       - name: Deploy app
-        run: kubectl apply -n online-boutique-prod -f k8s-home-pl/app/online-boutique/
+        run: kubectl apply -n online-boutique-prod -f app/online-boutique/
         
       - name: Wait for app
         run: |
