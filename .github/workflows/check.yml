@@ -34,5 +34,5 @@ jobs:
           kubectl rollout status -n online-boutique-prod deployment paymentservice
           kubectl rollout status -n online-boutique-prod deployment productcatalogservice
           kubectl rollout status -n online-boutique-prod deployment recommendationservice
-          kubectl rollout status -n online-boutique-prod deployment redis
+          kubectl rollout status -n online-boutique-prod deployment redis-cart
           kubectl rollout status -n online-boutique-prod deployment shippingservice
